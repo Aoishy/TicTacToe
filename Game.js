@@ -30,7 +30,9 @@ boxes.forEach((box) => {
             turn0=true;
           }
          box.disabled=true;//1 button only 1 click
-         checkWinner();
+         if(!checkWinner() && checkDraw()) {
+            showDraw();
+         }
     });
 });
 
@@ -57,10 +59,28 @@ const checkWinner=()=>{
        {
         if(post1val===post2val&&post2val===post3val)
         {
-           
             showWinner(post1val);
+            return true;
         }
        }
+    }
+    return false;
+};
+
+const checkDraw = () => {
+    for(let box of boxes) {
+        if(box.innerText === "") {
+            return false;
+        }
+    }
+    return true;
+};
+
+const showDraw = () => {
+    msg.innerText = "Game ended in a draw!";
+    msgcontainer.classList.remove("hide");
+    for(let box of boxes) {
+        box.disabled = true;
     }
 };
 
